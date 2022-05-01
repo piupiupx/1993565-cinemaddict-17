@@ -2,9 +2,10 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/main.js', // точка входа
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle.js', // сюда помещает бандл
+
     path: path.resolve(__dirname, 'build'),
     clean: true,
   },
@@ -15,6 +16,7 @@ module.exports = {
     }),
   ],
   module: {
+    // преобразования
     rules: [
       {
         test: /\.js$/,
