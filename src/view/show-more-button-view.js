@@ -1,19 +1,15 @@
-import { createElement } from '../render.js';
+import ViewConstructor from './view-constructor.js';
 
-export default class ShowMoreButtonView {
-  getTemplate() {
-    return '<button class="films-list__show-more">Show more</button>';
-  }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
+const createShowMoreButtonTemplate = () =>  '<button class="films-list__show-more">Show more</button>';
 
-    return this.element;
-  }
 
-  removeElement() {
-    this.element = null;
+
+
+
+
+export default class ShowMoreButtonView extends ViewConstructor {
+  constructor() {
+    super(() => createShowMoreButtonTemplate);
   }
 }
