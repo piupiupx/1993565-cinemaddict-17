@@ -1,6 +1,6 @@
-import FilmModel from "./model/film-model.js";
-import CommentModel from "./model/comments-model.js";
-import { getRandomInteger } from "./util.js";
+import FilmModel from './model/film-model.js';
+import CommentModel from './model/comments-model.js';
+import { getRandomInteger } from './util.js';
 
 const getFilmsData = () => {
   const films = [...new FilmModel().getFilms()];

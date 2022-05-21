@@ -1,13 +1,10 @@
 import {
-  humanizeRuntime,
   humanizeFilmDate,
-  humanizeCommentDate,
   getRandomDate,
   generateDate,
-  formatDescription,
   getRandomInteger,
   getUniqueValues,
-} from "../util.js";
+} from '../util.js';
 import {
   COUNTRIES,
   DESCRIPTION,
@@ -15,15 +12,15 @@ import {
   NAMES,
   POSTERS,
   TITLES,
-} from "../const";
-import { generateComment } from "./comment.js";
+} from '../const';
+import { generateComment } from './comment.js';
 const generateDescription = () => {
   const length = getRandomInteger(0, 5);
   const result = Array.from(
     { length },
     () => DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)]
   );
-  return result.join(" ");
+  return result.join('');
 };
 
 const generateUniqueArray = (array) => {
@@ -44,13 +41,13 @@ const generateRuntime = () => {
 
 export const generateFilm = () => {
   const isAlreadyWatched = getRandomInteger(0, 1);
-  const watchingDate = isAlreadyWatched ? generateDate(-2000) : "";
+  const watchingDate = isAlreadyWatched ? generateDate(-2000) : '';
   return {
     id: getRandomInteger(1, 10),
     comments: [],
     filmInfo: {
       title: TITLES[getRandomInteger(0, TITLES.length - 1)],
-      alternativeTitle: "Laziness Who Sold Themselves",
+      alternativeTitle: 'Laziness Who Sold Themselves',
       totalRating: (
         getRandomInteger(1, 9) +
         getRandomInteger(0, 10) * 0.1

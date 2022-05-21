@@ -1,23 +1,24 @@
-
-import {formatDescription, humanizeRuntime, humanizeFilmDate} from '../util';
+import { humanizeRuntime, humanizeFilmDate } from '../util';
 import ViewConstructor from './view-constructor.js';
-
 
 const createFilmCardTemplate = (film) => {
   const MAX_DESCRIPTION_LENGTH = 140;
 
-  const {comments, filmInfo} = film;
+  const { comments, filmInfo } = film;
 
-  const {title, poster, totalRating, release, runtime, description, genre} = filmInfo;
-  const {date} = release;
+  const {
+    title,
+    poster,
+    totalRating,
+    release,
+    runtime,
+    description,
+    genre,
+  } = filmInfo;
+  const { date } = release;
 
-  const filmDate = date !== null
-    ? humanizeFilmDate(date)
-    : '';
+  const filmDate = date !== null ? humanizeFilmDate(date) : '';
 
-  const desc = description !== null
-    ? formatDescription(description, MAX_DESCRIPTION_LENGTH)
-    : '';
   return `<article class="film-card">
     <a class="film-card__link">
       <h3 class="film-card__title">${title}</h3>
@@ -44,5 +45,3 @@ export default class FilmCardView extends ViewConstructor {
     super(() => createFilmCardTemplate(film));
   }
 }
-
-

@@ -1,14 +1,4 @@
-import dayjs from "dayjs";
-export {
-  humanizeRuntime,
-  humanizeFilmDate,
-  generateDate,
-  humanizeCommentDate,
-  getRandomDate,
-  formatDescription,
-  getRandomInteger,
-  getUniqueValues,
-};
+import dayjs from 'dayjs';
 
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -25,12 +15,12 @@ const humanizeRuntime = (runtime) => {
 
   return `${hours}h ${minutes}m`;
 };
-const humanizeFilmDate = (date) => dayjs(date).format("D MMMM YYYY");
-const humanizeCommentDate = (date) => dayjs(date).format("YY/MM/D hh:m");
+const humanizeFilmDate = (date) => dayjs(date).format('D MMMM YYYY');
+const humanizeCommentDate = (date) => dayjs(date).format('YY/MM/D hh:m');
 const getRandomDate = (minDaysGap, maxDaysGap) => {
   const daysGap = getRandomInteger(minDaysGap, maxDaysGap);
 
-  return dayjs().add(daysGap, "day").toDate();
+  return dayjs().add(daysGap, 'day').toDate();
 };
 const formatDescription = (description, maxLength) => {
   if (description.length <= maxLength) {
@@ -41,8 +31,18 @@ const formatDescription = (description, maxLength) => {
 const generateDate = (minDaysGap, maxDaysGap) => {
   const daysGap = getRandomInteger(minDaysGap, maxDaysGap);
 
-  return dayjs().add(daysGap, "day").toDate();
+  return dayjs().add(daysGap, 'day').toDate();
 };
 
 const getUniqueValues = (array) =>
   array.filter((value, index, self) => self.indexOf(value) === index);
+export {
+  humanizeRuntime,
+  humanizeFilmDate,
+  generateDate,
+  humanizeCommentDate,
+  getRandomDate,
+  formatDescription,
+  getRandomInteger,
+  getUniqueValues,
+};
