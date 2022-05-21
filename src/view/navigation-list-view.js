@@ -8,9 +8,6 @@ const createNavigationListTemplate = () => `<nav class="main-navigation">
       <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
     </nav>`;
 
-
-
-
 export default class NavigationListView extends ViewConstructor {
   constructor() {
     super(() => createNavigationListTemplate);

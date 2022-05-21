@@ -5,6 +5,36 @@ import {
   humanizeCommentDate,
 } from '../util';
 
+const createControlsTemplate = (userDetails) => {
+  const ACTIVE_CONTROL_CLASS = 'film-details__control-button--active';
+  // eslint-disable-next-line no-unused-vars
+  const { watchlist, alreadyWatched, favorite } = userDetails;
+
+  // eslint-disable-next-line no-unused-vars
+  const watchlistClassName = watchlist ? ACTIVE_CONTROL_CLASS : '';
+
+  // eslint-disable-next-line no-unused-vars
+  const favoriteClassName = favorite ? ACTIVE_CONTROL_CLASS : '';
+};
+
+const createGenresTemplate = (genres) =>genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
+
+// eslint-disable-next-line no-undef, no-unused-vars
+const createCommentsTemplate = (commentsList) => comments.map((comment) =>`<li class="film-details__comment" >
+    <span class="film-details__comment-emoji">
+      <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-smile">
+    </span>
+    <div>
+      <p class="film-details__comment-text">${comment.comment}</p>
+      <p class="film-details__comment-info">
+        <span class="film-details__comment-author">${comment.author}</span>
+        <span class="film-details__comment-day">${humanizeCommentDate(comment.date)}</span>
+        <button class="film-details__comment-delete">Delete</button>
+      </p>
+    </div>
+  </li>
+`).join('');
+
 const createPopupFilmTemplate = (film, commentsList) => {
   const { comments, filmInfo, userDetails } = film;
   const {
@@ -22,42 +52,7 @@ const createPopupFilmTemplate = (film, commentsList) => {
     actors,
   } = filmInfo;
   const { date, releaseCountry } = release;
-  const createControlsTemplate = (userDetails) => {
-    const ACTIVE_CONTROL_CLASS = 'film-details__control-button--active';
-    const { watchlist, alreadyWatched, favorite } = userDetails;
 
-    const watchlistClassName = watchlist ? ACTIVE_CONTROL_CLASS : '';
-
-    const watchedClassName = alreadyWatched ? ACTIVE_CONTROL_CLASS : '';
-
-    const favoriteClassName = favorite ? ACTIVE_CONTROL_CLASS : '';
-  };
-
-  const createGenresTemplate = (genres) =>
-    genres
-      .map((genre) => `<span class="film-details__genre">${genre}</span>`)
-      .join('');
-
-  const createCommentsTemplate = (comm) =>
-    comments
-      .map(
-        (comment) =>
-          `<li class="film-details__comment" >
-    <span class="film-details__comment-emoji">
-      <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-smile">
-    </span>
-    <div>
-      <p class="film-details__comment-text">${comment.comment}</p>
-      <p class="film-details__comment-info">
-        <span class="film-details__comment-author">${comment.author}</span>
-        <span class="film-details__comment-day">${humanizeCommentDate(comment.date)}</span>
-        <button class="film-details__comment-delete">Delete</button>
-      </p>
-    </div>
-  </li>
-`
-      )
-      .join('');
 
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">

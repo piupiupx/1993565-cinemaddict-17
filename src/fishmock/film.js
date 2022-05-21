@@ -13,7 +13,7 @@ import {
   POSTERS,
   TITLES,
 } from '../const';
-import { generateComment } from './comment.js';
+
 const generateDescription = () => {
   const length = getRandomInteger(0, 5);
   const result = Array.from(

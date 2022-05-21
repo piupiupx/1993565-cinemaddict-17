@@ -2,7 +2,7 @@ import { humanizeRuntime, humanizeFilmDate } from '../util';
 import ViewConstructor from './view-constructor.js';
 
 const createFilmCardTemplate = (film) => {
-  const MAX_DESCRIPTION_LENGTH = 140;
+  //const MAX_DESCRIPTION_LENGTH = 140;
 
   const { comments, filmInfo } = film;
 
