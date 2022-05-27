@@ -1,6 +1,6 @@
 import { render } from './render.js';
 import profileUserView from './view/profile-user-view.js';
-import CardListPresenter from './presenter/presenter.js';
+import CardListPresenter from './presenter/card-list-presenter.js';
 import { getFilmsData } from './data.js';
 
 import NavigationListView from './view/navigation-list-view.js';

@@ -2,6 +2,7 @@ import { render } from '../render.js';
 import FilmsListView from '../view/films-list-container-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import FilmView from '../view/film-view.js';
+import EmptyListView from '../view/list-empty-view.js';
 
 import PopupView from '../view/popup-film-card-view.js';
 
@@ -25,16 +26,16 @@ export default class CardListPresenter {
     render(this.#boardComponent, this.filmsListContainer);
     render(this.#filmsListComponent, this.#boardComponent.element);
 
-
     for (let i = 0; i < Math.min( this.#boardFilms.length, FILM_COUNT_PER_STEP); i++) {
       this.#renderFilm(this.#boardFilms[i]);
-
     }
 
     if (this.#boardFilms.length >= FILM_COUNT_PER_STEP) {
       render(this.#loadMoreButtonComponent, filmsListContainer );
-
       this.#loadMoreButtonComponent.element.addEventListener('click', this.#handleLoadMoreButtonClick);
+    }
+    if (!this.#boardFilms.length) {
+      render(new EmptyListView(), this.filmsListContainer);
     }
 
   };
@@ -59,13 +60,12 @@ export default class CardListPresenter {
     const filmComponent = new FilmCardView(film);
     const popupComponent = new PopupView(film, this.comments);
 
-
     const replacePopupToForm = () => {
-      this.#filmsListComponent.element.replaceChild(popupComponent.element, filmComponent.element);
+      this.#filmsListComponent.element.appendChild(popupComponent.element);
     };
 
     const replaceFormToPopup = () => {
-      this.#filmsListComponent.element.replaceChild( filmComponent.element, popupComponent.element);
+      this.#filmsListComponent.element.removeChild(popupComponent.element);
     };
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
@@ -75,8 +75,8 @@ export default class CardListPresenter {
       }
     };
 
-
     filmComponent.element.querySelector('.film-card__poster').addEventListener('click', () => {
+
       replacePopupToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
