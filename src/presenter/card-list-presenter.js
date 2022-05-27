@@ -25,15 +25,12 @@ export default class CardListPresenter {
     render(this.#boardComponent, this.filmsListContainer);
     render(this.#filmsListComponent, this.#boardComponent.element);
 
-
     for (let i = 0; i < Math.min( this.#boardFilms.length, FILM_COUNT_PER_STEP); i++) {
       this.#renderFilm(this.#boardFilms[i]);
-
     }
 
     if (this.#boardFilms.length >= FILM_COUNT_PER_STEP) {
       render(this.#loadMoreButtonComponent, filmsListContainer );
-
       this.#loadMoreButtonComponent.element.addEventListener('click', this.#handleLoadMoreButtonClick);
     }
 
@@ -59,9 +56,8 @@ export default class CardListPresenter {
     const filmComponent = new FilmCardView(film);
     const popupComponent = new PopupView(film, this.comments);
 
-
     const replacePopupToForm = () => {
-      this.#filmsListComponent.element.replaceChild(popupComponent.element, filmComponent.element);
+      this.#filmsListComponent.element.appendChild(popupComponent.element);
     };
 
     const replaceFormToPopup = () => {
@@ -75,8 +71,8 @@ export default class CardListPresenter {
       }
     };
 
-
     filmComponent.element.querySelector('.film-card__poster').addEventListener('click', () => {
+      console.log('ggggggg');
       replacePopupToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
