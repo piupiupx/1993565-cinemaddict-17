@@ -2,7 +2,7 @@ import { render } from '../render.js';
 import FilmsListView from '../view/films-list-container-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import FilmView from '../view/film-view.js';
-
+import EmptyListView from '../view/list-empty-view.js';
 import PopupView from '../view/popup-film-card-view.js';
 
 import ShowMoreButtonView from '../view/show-more-button-view.js';
@@ -33,7 +33,9 @@ export default class CardListPresenter {
       render(this.#loadMoreButtonComponent, filmsListContainer );
       this.#loadMoreButtonComponent.element.addEventListener('click', this.#handleLoadMoreButtonClick);
     }
-
+    if (!this.#boardFilms.length) {
+      render(new EmptyListView(), this.filmsListContainer);
+    }
   };
 
   #handleLoadMoreButtonClick = (evt) => {
@@ -61,7 +63,7 @@ export default class CardListPresenter {
     };
 
     const replaceFormToPopup = () => {
-      this.#filmsListComponent.element.replaceChild( filmComponent.element, popupComponent.element);
+      this.#filmsListComponent.element.removeChild(popupComponent.element);
     };
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
