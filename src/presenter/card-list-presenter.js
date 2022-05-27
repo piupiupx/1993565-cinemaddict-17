@@ -72,7 +72,7 @@ export default class CardListPresenter {
     };
 
     filmComponent.element.querySelector('.film-card__poster').addEventListener('click', () => {
-      console.log('ggggggg');
+
       replacePopupToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
