@@ -145,8 +145,8 @@ const createPopupFilmTemplate = (film, commentsList) => {
 };
 
 export default class PopupView extends ViewConstructor {
-  constructor(film, comments) {
-    const currFilmComments = comments.filter((comments) =>
+  constructor(film, commentsArr) {
+    const currFilmComments = commentsArr.filter((comments) =>
       film.comments.some((filmCommentId) => filmCommentId === comments.id)
     );
     super(() => createPopupFilmTemplate(film, currFilmComments));
