@@ -1,20 +1,21 @@
 import {createElement} from '../render';
 class ViewConstructor {
   #element = null;
+
   constructor(createTemplate) {
     this.createTemplate = createTemplate;
   }
 
-  getElement() {
+  get template() {
+    return this.createTemplate();
+  }
+
+  get element() {
     if (!this.#element) {
-      this.#element = createElement(this.getTemplate());
+      this.#element = createElement(this.template);
     }
 
     return this.#element;
-  }
-
-  getTemplate() {
-    return this.createTemplate();
   }
 
   removeElement() {

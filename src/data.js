@@ -3,8 +3,8 @@ import CommentModel from './model/comments-model.js';
 import { getRandomInteger } from './util.js';
 
 const getFilmsData = () => {
-  const films = [...new FilmModel().getFilms()];
-  const comments = [...new CommentModel().getComments()];
+  const films = [...new FilmModel().films];
+  const comments = [...new CommentModel().comments];
 
   for (const film of films) {
     const count = getRandomInteger(0, comments.length - 1);
