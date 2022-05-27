@@ -34,7 +34,6 @@ export default class CardListPresenter {
       this.#loadMoreButtonComponent.element.addEventListener('click', this.#handleLoadMoreButtonClick);
     }
 
-
   };
 
   #handleLoadMoreButtonClick = (evt) => {
