@@ -1,6 +1,4 @@
-
 import ViewConstructor from './view-constructor.js';
-
 
 const createListEmptyTemplate = () =>
   `<section class="films">
@@ -17,7 +15,6 @@ const createListEmptyTemplate = () =>
     </section>
   </section>
 </main>`;
-
 
 export default class EmptyListView extends ViewConstructor {
   constructor() {
