@@ -24,5 +24,3 @@ class ViewConstructor {
 }
 
 export default ViewConstructor;
-
-

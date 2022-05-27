@@ -32,9 +32,7 @@ export default class CardListPresenter {
       render(this.#loadMoreButtonComponent, filmsListContainer );
       this.#loadMoreButtonComponent.element.addEventListener('click', this.#handleLoadMoreButtonClick);
     }
-    if (!this.#boardFilms.length) {
-      render(new EmptyListView(), this.filmsListContainer);
-    }
+
   };
 
   #handleLoadMoreButtonClick = (evt) => {
@@ -62,7 +60,7 @@ export default class CardListPresenter {
     };
 
     const replaceFormToPopup = () => {
-      this.#filmsListComponent.element.removeChild(popupComponent.element);
+      this.#filmsListComponent.element.replaceChild( filmComponent.element, popupComponent.element);
     };
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
