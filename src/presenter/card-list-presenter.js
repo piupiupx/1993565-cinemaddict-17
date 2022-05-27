@@ -2,9 +2,8 @@ import { render } from '../render.js';
 import FilmsListView from '../view/films-list-container-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import FilmView from '../view/film-view.js';
-import EmptyListView from '../view/list-empty-view.js';
 import PopupView from '../view/popup-film-card-view.js';
-
+import EmptyListView from '../view/list-empty-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 
 const FILM_COUNT_PER_STEP = 5;
