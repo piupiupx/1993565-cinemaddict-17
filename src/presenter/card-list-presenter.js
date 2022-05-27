@@ -33,8 +33,6 @@ export default class CardListPresenter {
       render(this.#loadMoreButtonComponent, filmsListContainer );
       this.#loadMoreButtonComponent.element.addEventListener('click', this.#handleLoadMoreButtonClick);
     }
-
-
   };
 
   #handleLoadMoreButtonClick = (evt) => {
