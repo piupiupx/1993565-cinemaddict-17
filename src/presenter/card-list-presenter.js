@@ -62,7 +62,8 @@ export default class CardListPresenter {
     };
 
     const replaceFormToPopup = () => {
-      this.#filmsListComponent.element.replaceChild( filmComponent.element, popupComponent.element);    };
+      this.#filmsListComponent.element.replaceChild( filmComponent.element, popupComponent.element);
+    };
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
