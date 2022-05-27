@@ -20,7 +20,7 @@ const createControlsTemplate = (userDetails) => {
 const createGenresTemplate = (genres) =>genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
 
 // eslint-disable-next-line no-undef, no-unused-vars
-const createCommentsTemplate = (commentsList) => comments.map((comment) =>`<li class="film-details__comment" >
+const createCommentsTemplate = (comments) => comments.map((comment) =>`<li class="film-details__comment" >
     <span class="film-details__comment-emoji">
       <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-smile">
     </span>
@@ -146,9 +146,9 @@ const createPopupFilmTemplate = (film, commentsList) => {
 
 export default class PopupView extends ViewConstructor {
   constructor(film, comments) {
-    const currMovieComments = comments.filter((comment) =>
-      film.comments.some((filmCommentId) => filmCommentId === comment.id)
+    const currFilmComments = comments.filter((comments) =>
+      film.comments.some((filmCommentId) => filmCommentId === comments.id)
     );
-    super(() => createPopupFilmTemplate(film, currMovieComments));
+    super(() => createPopupFilmTemplate(film, currFilmComments));
   }
 }
