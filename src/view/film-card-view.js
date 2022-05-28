@@ -1,5 +1,18 @@
 import { humanizeRuntime, humanizeFilmDate } from '../util';
-import ViewConstructor from './view-constructor.js';
+import AbstractView from '../framework/view/abstract-view.js';
+
+const BLANK_FILM = {
+  comments: [],
+  filmInfo: '',
+  title: '',
+  date: null,
+  poster: null,
+  totalRating: null,
+  release: null,
+  runtime: null,
+  description: '',
+  genre: [],
+};
 
 const createFilmCardTemplate = (film) => {
   //const MAX_DESCRIPTION_LENGTH = 140;
@@ -40,8 +53,25 @@ const createFilmCardTemplate = (film) => {
   </article>`;
 };
 
-export default class FilmCardView extends ViewConstructor {
-  constructor(film) {
-    super(() => createFilmCardTemplate(film));
+export default class FilmCardView extends AbstractView {
+
+  #film = null;
+  constructor(film = BLANK_FILM) {
+    super();
+    this.#film = film;
   }
+
+  get template() {
+    return createFilmCardTemplate(this.#film);
+  }
+
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.film-card__poster').addEventListener('click', this.#editClickHandler);
+  };
+
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.editClick();
+  };
 }

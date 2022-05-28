@@ -1,4 +1,4 @@
-import { render } from './render.js';
+import {render} from './framework/render.js';
 import profileUserView from './view/profile-user-view.js';
 import CardListPresenter from './presenter/card-list-presenter.js';
 import { getFilmsData } from './data.js';

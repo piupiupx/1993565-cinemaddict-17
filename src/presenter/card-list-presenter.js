@@ -1,4 +1,4 @@
-import { render } from '../render.js';
+import {render} from '../framework/render.js';
 import FilmsListView from '../view/films-list-container-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import FilmView from '../view/film-view.js';
@@ -30,16 +30,14 @@ export default class CardListPresenter {
 
     if (this.#boardFilms.length >= FILM_COUNT_PER_STEP) {
       render(this.#loadMoreButtonComponent, filmsListContainer );
-      this.#loadMoreButtonComponent.element.addEventListener('click', this.#handleLoadMoreButtonClick);
+      this.#loadMoreButtonComponent.setClickHandler(this.#handleLoadMoreButtonClick);
     }
     if (!this.#boardFilms.length) {
       render(new EmptyListView(), this.filmsListContainer);
     }
   };
 
-  #handleLoadMoreButtonClick = (evt) => {
-    evt.preventDefault();
-
+  #handleLoadMoreButtonClick = () => {
     this.#boardFilms
       .slice(this.#renderedFilmCount, this.#renderedFilmCount + FILM_COUNT_PER_STEP)
       .forEach((film) => this.#renderFilm(film));
@@ -72,13 +70,13 @@ export default class CardListPresenter {
       }
     };
 
-    filmComponent.element.querySelector('.film-card__poster').addEventListener('click', () => {
+    filmComponent.setEditClickHandler(() => {
 
       replacePopupToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    popupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+    popupComponent.setFormSubmitHandler(() => {
       replaceFormToPopup();
       document.removeEventListener('keydown', onEscKeyDown);
     });

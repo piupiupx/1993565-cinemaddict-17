@@ -1,4 +1,4 @@
-import ViewConstructor from './view-constructor.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createListEmptyTemplate = () =>
   `<section class="films">
@@ -16,8 +16,9 @@ const createListEmptyTemplate = () =>
   </section>
 </main>`;
 
-export default class EmptyListView extends ViewConstructor {
-  constructor() {
-    super(createListEmptyTemplate);
+export default class EmptyListView extends AbstractView {
+  get template() {
+    return createListEmptyTemplate();
   }
+
 }

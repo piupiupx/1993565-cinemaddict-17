@@ -1,5 +1,4 @@
-import ViewConstructor from './view-constructor.js';
-
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createNavigationListTemplate = () => `<nav class="main-navigation">
       <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
@@ -8,8 +7,8 @@ const createNavigationListTemplate = () => `<nav class="main-navigation">
       <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
     </nav>`;
 
-export default class NavigationListView extends ViewConstructor {
-  constructor() {
-    super(() => createNavigationListTemplate);
+export default class NavigationListView extends AbstractView {
+  get template() {
+    return createNavigationListTemplate();
   }
 }

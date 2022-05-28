@@ -1,4 +1,4 @@
-import ViewConstructor from './view-constructor.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 
 const createFiltersTemplate = () => `<ul class="sort">
@@ -8,8 +8,8 @@ const createFiltersTemplate = () => `<ul class="sort">
   </ul>`;
 
 
-export default class FiltersView extends ViewConstructor {
-  constructor() {
-    super(() => createFiltersTemplate);
+export default class FiltersView extends AbstractView {
+  get template() {
+    return createFiltersTemplate();
   }
 }

@@ -1,4 +1,4 @@
-import ViewConstructor from './view-constructor.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {
   humanizeFilmDate,
   humanizeRuntime,
@@ -147,11 +147,28 @@ const createPopupFilmTemplate = (film, commentsList) => {
 </section>`;
 };
 
-export default class PopupView extends ViewConstructor {
-  constructor(film, commentsArr) {
-    const currFilmComments = commentsArr.filter((comments) =>
-      film.comments.some((filmCommentId) => filmCommentId === comments.id)
-    );
-    super(() => createPopupFilmTemplate(film, currFilmComments));
+export default class PopupView extends AbstractView {
+
+  #film = null;
+  #comments = [];
+
+  constructor(film, comments) {
+    super();
+    this.#comments = comments.filter((comment) => film.comments.some((movieCommentId) => movieCommentId === comment.id));
+    this.#film = film;
   }
+
+  get template() {
+    return createPopupFilmTemplate(this.#film, this.#comments);
+  }
+
+  setFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#formSubmitHandler);
+  };
+
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  };
 }
