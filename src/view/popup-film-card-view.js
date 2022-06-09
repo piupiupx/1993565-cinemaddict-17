@@ -3,21 +3,34 @@ import {
   humanizeFilmDate,
   humanizeRuntime,
   humanizeCommentDate,
-} from '../util';
+} from '../utils/film.js';
 
 const createControlsTemplate = (userDetails) => {
   const ACTIVE_CONTROL_CLASS = 'film-details__control-button--active';
 
-  // eslint-disable-next-line no-unused-vars
   const { watchlist, alreadyWatched, favorite } = userDetails;
 
-
-  // eslint-disable-next-line no-unused-vars
   const watchlistClassName = watchlist ? ACTIVE_CONTROL_CLASS : '';
 
-
-  // eslint-disable-next-line no-unused-vars
   const favoriteClassName = favorite ? ACTIVE_CONTROL_CLASS : '';
+
+  const watchedClassName = alreadyWatched
+    ? ACTIVE_CONTROL_CLASS
+    : '';
+
+
+  return `<section  class="film-details__controls">
+  <button type="button"  class="film-details__control-button film-details__control-button--watchlist ${watchlistClassName}" id="watchlist"
+          name="watchlist">Add to watchlist
+  </button>
+  <button type="button"
+           class="film-details__control-button film-details__control-button--watched ${watchedClassName}"
+          id="watched" name="watched">Already watched
+  </button>
+  <button type="button"  class="film-details__control-button film-details__control-button--favorite ${favoriteClassName}" id="favorite"
+          name="favorite">Add to favorites
+  </button>
+</section>`;
 };
 
 const createGenresTemplate = (genres) =>genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
@@ -66,7 +79,7 @@ const createPopupFilmTemplate = (film, commentsList) => {
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
           <img class="film-details__poster-img" src="${poster}" alt="">
-          <p class="film-details__age">${ageRating}</p>
+          <p class="film-details__age">Age rating ${ageRating} +</p>
         </div>
         <div class="film-details__info">
           <div class="film-details__info-head">
@@ -163,12 +176,12 @@ export default class PopupView extends AbstractView {
   }
 
   setFormSubmitHandler = (callback) => {
-    this._callback.formSubmit = callback;
+    this._callback.click = callback;
     this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#formSubmitHandler);
   };
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.formSubmit();
+    this._callback.click();
   };
 }

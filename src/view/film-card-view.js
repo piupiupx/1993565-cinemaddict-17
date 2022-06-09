@@ -1,4 +1,7 @@
-import { humanizeRuntime, humanizeFilmDate } from '../util';
+import {
+  humanizeFilmDate,
+  humanizeRuntime
+} from '../utils/film.js';
 import AbstractView from '../framework/view/abstract-view.js';
 
 const BLANK_FILM = {
@@ -65,13 +68,14 @@ export default class FilmCardView extends AbstractView {
     return createFilmCardTemplate(this.#film);
   }
 
-  setEditClickHandler = (callback) => {
-    this._callback.editClick = callback;
-    this.element.querySelector('.film-card__poster').addEventListener('click', this.#editClickHandler);
-  };
-
   #editClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.editClick();
   };
+
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.film-card__link').addEventListener('click', this.#editClickHandler);
+  };
+
 }

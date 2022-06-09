@@ -1,4 +1,4 @@
-import {render} from '../framework/render.js';
+import {render, replace, remove} from '../framework/render.js';
 import FilmsListView from '../view/films-list-container-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import FilmView from '../view/film-view.js';
@@ -45,8 +45,7 @@ export default class CardListPresenter {
     this.#renderedFilmCount += FILM_COUNT_PER_STEP;
 
     if (this.#renderedFilmCount >= this.#boardFilms.length) {
-      this.#loadMoreButtonComponent.element.remove();
-      this.#loadMoreButtonComponent.removeElement();
+      remove(this.#loadMoreButtonComponent);
     }
 
   };
@@ -56,11 +55,11 @@ export default class CardListPresenter {
     const popupComponent = new PopupView(film, this.comments);
 
     const replacePopupToForm = () => {
-      this.#filmsListComponent.element.appendChild(popupComponent.element);
+      replace(popupComponent, filmComponent);
     };
 
     const replaceFormToPopup = () => {
-      this.#filmsListComponent.element.removeChild(popupComponent.element);
+      replace(filmComponent, popupComponent);
     };
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
@@ -71,7 +70,6 @@ export default class CardListPresenter {
     };
 
     filmComponent.setEditClickHandler(() => {
-
       replacePopupToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
@@ -82,5 +80,7 @@ export default class CardListPresenter {
     });
 
     render( filmComponent, this.#filmsListComponent.element);
+    this.#loadMoreButtonComponent.setClickHandler(this.#handleLoadMoreButtonClick);
+
   };
 }
