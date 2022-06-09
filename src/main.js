@@ -10,9 +10,11 @@ const mainElement = document.querySelector('.main');
 const headerElement = document.querySelector('.header');
 const cardListPresenter = new CardListPresenter();
 const filmsData = getFilmsData();
+console.log(filmsData);
 const filters = generateFilter(filmsData.films);
 
 render(new profileUserView(), headerElement);
+console.log(filters);
 render(new NavigationListView(filters), mainElement);
 render(new FiltersView(), mainElement);
 

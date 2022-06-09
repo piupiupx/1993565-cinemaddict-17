@@ -21,9 +21,7 @@ const createFilterItemTemplate = (filter, isChecked) => {
 };
 
 const createFilterTemplate = (filterItems) => {
-  const filterItemsTemplate = filterItems
-    .map((filter, index) => createFilterItemTemplate(filter, index === 0))
-    .join('');
+  const filterItemsTemplate = filterItems.map((filter, index) => createFilterItemTemplate(filter, index === 0)).join('');
   return `<nav class="main-navigation">
     ${filterItemsTemplate}
   </nav>`;
