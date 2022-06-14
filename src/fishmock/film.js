@@ -13,6 +13,7 @@ import {
   POSTERS,
   TITLES,
 } from '../const';
+import { nanoid } from 'nanoid';
 
 const generateDescription = () => {
   const length = getRandomInteger(0, 5);
@@ -43,7 +44,7 @@ export const generateFilm = () => {
   const isAlreadyWatched = getRandomInteger(0, 1);
   const watchingDate = isAlreadyWatched ? generateDate(-2000) : '';
   return {
-    id: getRandomInteger(1, 10),
+    id: nanoid(),
     comments: [],
     filmInfo: {
       title: TITLES[getRandomInteger(0, TITLES.length - 1)],

@@ -14,10 +14,7 @@ const createControlsTemplate = (userDetails) => {
 
   const favoriteClassName = favorite ? ACTIVE_CONTROL_CLASS : '';
 
-  const watchedClassName = alreadyWatched
-    ? ACTIVE_CONTROL_CLASS
-    : '';
-
+  const watchedClassName = alreadyWatched ? ACTIVE_CONTROL_CLASS : '';
 
   return `<section  class="film-details__controls">
   <button type="button"  class="film-details__control-button film-details__control-button--watchlist ${watchlistClassName}" id="watchlist"
@@ -33,23 +30,34 @@ const createControlsTemplate = (userDetails) => {
 </section>`;
 };
 
-const createGenresTemplate = (genres) =>genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join('');
+const createGenresTemplate = (genres) =>
+  genres
+    .map((genre) => `<span class="film-details__genre">${genre}</span>`)
+    .join('');
 
-
-const createCommentsTemplate = (comments) => comments.map((comment) =>`<li class="film-details__comment" >
+const createCommentsTemplate = (comments) =>
+  comments
+    .map(
+      (comment) => `<li class="film-details__comment" >
     <span class="film-details__comment-emoji">
-      <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-smile">
+      <img src="./images/emoji/${
+        comment.emotion
+      }.png" width="55" height="55" alt="emoji-smile">
     </span>
     <div>
       <p class="film-details__comment-text">${comment.comment}</p>
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${comment.author}</span>
-        <span class="film-details__comment-day">${humanizeCommentDate(comment.date)}</span>
+        <span class="film-details__comment-day">${humanizeCommentDate(
+          comment.date
+        )}</span>
         <button class="film-details__comment-delete">Delete</button>
       </p>
     </div>
   </li>
-`).join('');
+`
+    )
+    .join('');
 
 const createPopupFilmTemplate = (film, commentsList) => {
   const { comments, filmInfo, userDetails } = film;
@@ -68,7 +76,6 @@ const createPopupFilmTemplate = (film, commentsList) => {
     actors,
   } = filmInfo;
   const { date, releaseCountry } = release;
-
 
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -117,7 +124,7 @@ const createPopupFilmTemplate = (film, commentsList) => {
               <td class="film-details__cell">${releaseCountry}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">${genre.length > 1 ? 'Genres' : 'Genre'}</td>
+              <td class="film-details__term">${ genre.length > 1 ? 'Genres' : 'Genre'}</td>
                    <td class="film-details__cell">${createGenresTemplate(genre)}</td>
           </tbody></table>
           <p class="film-details__film-description">${description}
@@ -161,13 +168,14 @@ const createPopupFilmTemplate = (film, commentsList) => {
 };
 
 export default class PopupView extends AbstractView {
-
   #film = null;
   #comments = [];
 
   constructor(film, comments) {
     super();
-    this.#comments = comments.filter((comment) => film.comments.some((movieCommentId) => movieCommentId === comment.id));
+    this.#comments = comments.filter((comment) =>
+      film.comments.some((filmCommentId) => filmCommentId === comment.id)
+    );
     this.#film = film;
   }
 
@@ -177,11 +185,13 @@ export default class PopupView extends AbstractView {
 
   setFormSubmitHandler = (callback) => {
     this._callback.click = callback;
-    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#formSubmitHandler);
+    this.element
+      .querySelector('.film-details__close-btn')
+      .addEventListener('click', this.#formSubmitHandler);
   };
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this._callback.click();
+    this._callback.click(this.#film);
   };
 }

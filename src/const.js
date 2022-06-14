@@ -91,5 +91,11 @@ const FilterType = {
   ALL: 0,
 };
 
+const SortType = {
+  DEFAULT: 'default',
+  DATE: 'date',
+  RATING: 'rating',
+};
 
-export {POSTERS, GENRES, DESCRIPTION, TITLES, NAMES, COUNTRIES, COMMENTS, EMOTIONS, FilterType};
+
+export {POSTERS, GENRES, DESCRIPTION, TITLES, NAMES, COUNTRIES, COMMENTS, EMOTIONS, FilterType, SortType};

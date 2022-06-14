@@ -1,7 +1,4 @@
-import {
-  humanizeFilmDate,
-  humanizeRuntime
-} from '../utils/film.js';
+import { humanizeFilmDate, humanizeRuntime } from '../utils/film.js';
 import AbstractView from '../framework/view/abstract-view.js';
 
 const BLANK_FILM = {
@@ -57,7 +54,6 @@ const createFilmCardTemplate = (film) => {
 };
 
 export default class FilmCardView extends AbstractView {
-
   #film = null;
   constructor(film = BLANK_FILM) {
     super();
@@ -68,14 +64,51 @@ export default class FilmCardView extends AbstractView {
     return createFilmCardTemplate(this.#film);
   }
 
+  setFavoriteClickHandler = (callback) => {
+    this._callback.favoriteClick = callback;
+    this.element
+      .querySelector('#favorite')
+      .addEventListener('click', this.#favoriteClickHandler);
+  };
+
+  setWatchListClickHandler = (callback) => {
+    this._callback.favoriteClick = callback;
+    this.element
+      .querySelector('#watchlist')
+      .addEventListener('click', this.#watchlistClickHandler);
+  };
+
+  setWatchedClickHandler = (callback) => {
+    this._callback.favoriteClick = callback;
+    this.element
+      .querySelector('#watched')
+      .addEventListener('click', this.#watchedClickHandler);
+  };
+
   #editClickHandler = (evt) => {
     evt.preventDefault();
     this._callback.editClick();
   };
 
-  setEditClickHandler = (callback) => {
-    this._callback.editClick = callback;
-    this.element.querySelector('.film-card__link').addEventListener('click', this.#editClickHandler);
+  #favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.favoriteClick();
   };
 
+  #watchlistClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchlistClick();
+  };
+
+  #watchedClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.watchedClick();
+  };
+
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element
+      .querySelector('.film-card__link')
+      .addEventListener('click', this.#editClickHandler);
+  };
 }

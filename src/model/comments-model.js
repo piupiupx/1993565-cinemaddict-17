@@ -1,7 +1,7 @@
 import { generateComment } from '../fishmock/comment.js';
-const COMMENT_QUANTITY = 5;
+import {getRandomInteger} from '../util.js';
 export default class CommentModel {
-  #commentsArr = Array.from({ length:COMMENT_QUANTITY}, generateComment);
+  #commentsArr = Array.from({length: getRandomInteger(0, 20)}, (_, i) => generateComment(i));
   get comments () {
     return this.#commentsArr;
   }
