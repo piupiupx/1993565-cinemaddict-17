@@ -93,8 +93,8 @@ const FilterType = {
 
 const SortType = {
   DEFAULT: 'default',
-  DATE: 'date',
-  RATING: 'rating',
+  DATE: 'date-new',
+  RATING: 'rating-hight',
 };
 
 

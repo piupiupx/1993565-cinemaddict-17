@@ -6,6 +6,8 @@ import EmptyListView from '../view/list-empty-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import SortView from '../view/sort-butons-view.js';
 import { updateItem } from '../util.js';
+import { SortType } from '../const.js';
+import { sortByRating, sortByDate } from '../utils/film.js';
 
 const FILM_COUNT_PER_STEP = 5;
 export default class CardListPresenter {
@@ -17,33 +19,21 @@ export default class CardListPresenter {
   #boardFilms = [];
   #renderedFilmCount = FILM_COUNT_PER_STEP;
   #filmPresenter = new Map();
-
+  #currentSortType = SortType.DEFAULT;
+  #sourcedBoardFilms = [];
   #films;
-  init = (filmsListContainer, filmsData) => {
-    this.filmsListContainer = filmsListContainer;
-    this.#films = filmsData.films;
-    this.#boardFilms = [...this.#films];
-    this.comments = filmsData.comments;
-    render(this.#boardComponent, this.filmsListContainer);
-    render(this.#filmsListComponent, this.#boardComponent.element);
+  #filmsModel = null;
+  #boardContainer = null;
 
-    for (
-      let i = 0;
-      i < Math.min(this.#boardFilms.length, FILM_COUNT_PER_STEP);
-      i++
-    ) {
-      this.#renderFilm(this.#boardFilms[i]);
-    }
+  constructor(filmsModel, boardContainer) {
+    this.#boardContainer = boardContainer;
+    this.#filmsModel = filmsModel;
+  }
 
-    if (this.#boardFilms.length >= FILM_COUNT_PER_STEP) {
-      render(this.#loadMoreButtonComponent, filmsListContainer);
-      this.#loadMoreButtonComponent.setClickHandler(
-        this.#handleLoadMoreButtonClick
-      );
-    }
-    if (!this.#boardFilms.length) {
-      render(new EmptyListView(), this.filmsListContainer);
-    }
+  init = () => {
+    this.#boardFilms = this.#filmsModel.films;
+    this.#sourcedBoardFilms = this.#filmsModel.films;
+    this.#renderBoard();
   };
 
   #handleLoadMoreButtonClick = () => {
@@ -60,11 +50,7 @@ export default class CardListPresenter {
   };
 
   #renderBoard = () => {
-    render(this.#boardComponent, this.filmsListContainer);
-
-    this.#loadMoreButtonComponent.setClickHandler(
-      this.#handleLoadMoreButtonClick
-    );
+    render(this.#boardComponent, this.#boardContainer);
 
     this.#renderSort();
     this.#renderFilmList();
@@ -109,13 +95,31 @@ export default class CardListPresenter {
     }
   };
 
-  #handleModeChange = () => {
-    this.#filmPresenter.forEach((presenter) => presenter.resetView());
+  #sortFilms = (sortType) => {
+    switch (sortType) {
+      case SortType.DATE:
+        this.#boardFilms.sort(sortByDate);
+        break;
+      case SortType.RATING:
+        this.#boardFilms.sort(sortByRating);
+        break;
+      default:
+        this.#boardFilms = [...this.#sourcedBoardFilms];
+    }
+
+    this.#currentSortType = sortType;
   };
 
-  #handleTaskChange = (updatedTask) => {
-    this.#boardFilms = updateItem(this.#boardFilms, updatedTask);
-    this.#filmPresenter.get(updatedTask.id).init(updatedTask);
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#sortFilms(sortType);
+    // - Очищаем список
+    // - Рендерим список заново
+    this.#clearFilmList();
+    this.#renderFilmList();
   };
 
   #renderSort = () => {
@@ -124,12 +128,15 @@ export default class CardListPresenter {
       this.#boardComponent.element,
       RenderPosition.AFTERBEGIN
     );
+    this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
   };
 
   #renderFilm = (film) => {
+    this.comments = film.comments;
+
     const filmPresenter = new FilmPresenter(
       this.#filmsListComponent.element,
-      this.#handleTaskChange,
+      this.#handleFilmChange,
       this.#handleModeChange
     );
     filmPresenter.init(film, this.comments);
@@ -137,5 +144,15 @@ export default class CardListPresenter {
     this.#loadMoreButtonComponent.setClickHandler(
       this.#handleLoadMoreButtonClick
     );
+  };
+
+  #handleModeChange = () => {
+    this.#filmPresenter.forEach((presenter) => presenter.resetView());
+  };
+
+  #handleFilmChange = (updatedFilm) => {
+    this.#boardFilms = updateItem(this.#boardFilms, updatedFilm);
+    this.#filmPresenter.get(updatedFilm.id).init(updatedFilm);
+    this.#sourcedBoardFilms = updateItem(this.#sourcedBoardFilms, updatedFilm);
   };
 }

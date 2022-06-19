@@ -7,7 +7,7 @@ const Mode = {
   OPEN: 'OPEN',
 };
 
-export default class TaskPresenter {
+export default class FilmPresenter {
   #filmsListComponent = null;
   #filmComponent = null;
   #popupComponent = null;
